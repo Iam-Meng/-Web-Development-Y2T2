@@ -8,6 +8,9 @@ const dom_choiceD = document.querySelector("#D");
 const dom_score = document.querySelector("#scoreContainer");
 const dom_start = document.querySelector("#start");
 
+const progressFill = document.querySelector(".progress-fill");
+const progressText = document.querySelector(".progress-text");
+
 dom_start.addEventListener("click", onStart);
 
 // DATA  ---------------------------------------------------------
@@ -58,7 +61,11 @@ function onStart() {
   // Display the quiz view,
   hide(dom_start);
   show(dom_quiz);
+  document.querySelector(".progress-wrapper").style.display = "block";
+  runningQuestionIndex = 0;
+  score = 0;
   renderQuestion();
+  updateProgress();
 }
 
 function renderQuestion() {
@@ -80,7 +87,10 @@ function onPlayerSubmit(answer) {
   runningQuestionIndex++;
   if (runningQuestionIndex < questions.length) {
     renderQuestion();
+    updateProgress();
   } else {
+    progressFill.style.width = "100%";
+    progressText.textContent = `Question ${questions.length} / ${questions.length}`;
     renderSCore();
   }
 }
@@ -92,7 +102,7 @@ function renderSCore() {
   hide(dom_question);
   show(dom_score);
   const scorePerCent = Math.round((100 * score) / questions.length);
-
+  document.querySelector(".progress-wrapper").style.display = "none";
   let emoji = scorePerCent >= 80 ? "😊"
     : scorePerCent >= 60 ? "🙂"
       : scorePerCent >= 40 ? "😐"
@@ -105,3 +115,14 @@ function renderSCore() {
 show(dom_start);
 hide(dom_quiz);
 hide(dom_score);
+
+// PROCESS BAR ---------------------------------------------------------
+function updateProgress() {
+  const total = questions.length;
+  const current = runningQuestionIndex + 1;
+
+  const percent = Math.round((current / total) * 100);
+
+  progressFill.style.width = percent + "%";
+  progressText.textContent = `Question ${current} / ${total}`;
+}
