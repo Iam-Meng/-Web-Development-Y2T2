@@ -13,6 +13,9 @@
 function transformToObjects(listOfNumbers) {
   result = [];
   // Write your code here
+  for (let i = 0; i < listOfNumbers.length; i++) {
+    result.push({ val: listOfNumbers[i] });
+  }
   return result;
 }
 
