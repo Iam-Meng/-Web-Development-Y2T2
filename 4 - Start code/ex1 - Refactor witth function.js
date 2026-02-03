@@ -17,7 +17,17 @@ let shoppingCart = [
   { name: "Apples", price: 2.5, quantity: 3 },
   { name: "Bananas", price: 1.5, quantity: 2 },
   { name: "Oranges", price: 3, quantity: 1 },
+  { name: "Watermelon", price: 2.5, quantity: 4 },
 ];
+
+function calculateTotalPrice(shoppingCart) {
+  let total = 0;
+  for (let item of shoppingCart) {
+    total += item.price * item.quantity;
+  }
+  return total;
+}
+console.log("Total price using function: ", calculateTotalPrice(shoppingCart));
 
 // Calculate total price without using functions
 let totalPrice = 0;
